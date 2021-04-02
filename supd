@@ -1,0 +1,28 @@
+#!/bin/bash
+sudo echo ""
+echo "---------------------------------------"
+echo "Iniciando Atualização Rapida De Sistema"
+echo "---------------------------------------"
+echo""
+sleep 2
+
+echo "-Removendo Travas"
+echo""
+sleep 1
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/lib/dpkg/lock
+sudo rm /var/lib/dpkg/lock-frontend
+sudo rm /var/cache/apt/archives/lock
+
+sudo dpkg --configure -a
+sleep 1
+echo "-Atualizando..."
+
+sudo apt update && sudo apt upgrade -y
+
+echo "-Limpando a Sujeira"
+sleep 1
+sudo apt autoremove -y
+sudo apt autoclean;
+echo "";
+echo "----Feito!----";
