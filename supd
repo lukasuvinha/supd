@@ -1,28 +1,56 @@
 #!/bin/bash
-sudo echo ""
+
+# Script de atualização so sistema pelo terminal, que une 'apt update' e 'apt updrade -y' num único comando, e também elimina aquelas informações feias por uma animação legal e simples
+
+clear
+echo "Senha do administrador"
+sudo echo "Ok!"
+sleep 1
+clear
+
 echo "---------------------------------------"
 echo "Iniciando Atualização Rapida De Sistema"
 echo "---------------------------------------"
-echo""
-sleep 2
+
+function loading {
+	echo "+"
+	sleep 0.3
+	echo -n "Carregando" # Escreva sem pular linha
+	for i in $(seq 1 1 5); # Laço de repetição FOR repita começando de "1", de 1 em 1 até "5"
+	do # Faça
+	echo -n "." # Escreva . sem pular linha
+	sleep 01 # Pause 1 segundo
+	echo -ne "" # Gambiarra, atualize a tela
+	done # Feito
+	echo ""
+}
+#function loading1 {
+#		chars="/-\|"
+
+#	while :; do
+#	  for (( i=0; i<${#chars}; i++ )); do
+#	    sleep 0.5
+#	    echo -en "${chars:$i:1}" "\r"
+#	  done
+#	done
+#}
+
+sleep 1
 
 echo "-Removendo Travas"
-echo""
-sleep 1
-sudo rm /var/lib/apt/lists/lock
-sudo rm /var/lib/dpkg/lock
-sudo rm /var/lib/dpkg/lock-frontend
-sudo rm /var/cache/apt/archives/lock
+#echo""
+sudo rm /var/lib/apt/lists/lock ; sudo rm /var/lib/dpkg/lock ; sudo rm /var/lib/dpkg/lock-frontend ; sudo rm /var/cache/apt/archives/lock ; sudo dpkg --configure -a | loading
 
-sudo dpkg --configure -a
-sleep 1
-echo "-Atualizando..."
+#sleep 0.2
 
-sudo apt update && sudo apt upgrade -y
+echo "-Atualizando Pacotes..."
+#echo ""
+sudo apt update | loading
+sudo apt upgrade -y | loading
 
 echo "-Limpando a Sujeira"
 sleep 1
-sudo apt autoremove -y
+sudo apt autoremove -y | loading
 sudo apt autoclean;
 echo "";
 echo "----Feito!----";
